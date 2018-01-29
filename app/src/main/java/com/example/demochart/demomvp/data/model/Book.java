@@ -17,6 +17,12 @@ public class Book implements Parcelable {
     public Book() {
     }
 
+    public Book(String title, String description, String imageUrl) {
+        mTitle = title;
+        mDescription = description;
+        mImageUrl = imageUrl;
+    }
+
     public Book(int id, String title, String description, String imageUrl) {
         mId = id;
         mTitle = title;
@@ -49,7 +55,10 @@ public class Book implements Parcelable {
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        if (mImageUrl != null) {
+            return mImageUrl;
+        }
+        return "";
     }
 
     public void setImageUrl(String imageUrl) {
