@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import com.example.demochart.demomvp.R;
+import com.example.demochart.demomvp.data.FakeBooksServiceApiImpl;
+import com.example.demochart.demomvp.data.BookRepositories;
+import com.example.demochart.demomvp.data.BooksRepository;
 import com.example.demochart.demomvp.data.model.Book;
 
 /**
@@ -27,7 +30,9 @@ public class AddBookActivity extends AppCompatActivity implements AddBookContrac
         mTitle = (EditText) findViewById(R.id.title);
         mDescription = (EditText) findViewById(R.id.description);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_book);
-        mPresenter = new AddBookPresenter(this);
+
+        BooksRepository notesRepository= BookRepositories.getInMemoryRepoInstance(new FakeBooksServiceApiImpl());
+        mPresenter = new AddBookPresenter(this, notesRepository);
         setPresenter(mPresenter);
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {

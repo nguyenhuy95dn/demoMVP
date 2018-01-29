@@ -1,6 +1,6 @@
 package com.example.demochart.demomvp.screen.addbook;
 
-import android.content.Intent;
+import com.example.demochart.demomvp.data.BooksRepository;
 import com.example.demochart.demomvp.data.model.Book;
 
 /**
@@ -9,13 +9,16 @@ import com.example.demochart.demomvp.data.model.Book;
 
 public class AddBookPresenter implements AddBookContract.Presenter {
     private final AddBookContract.View mBookDetailView;
+    private final BooksRepository mBooksRepository;
 
-    public AddBookPresenter(AddBookContract.View bookDetailView) {
+    public AddBookPresenter(AddBookContract.View bookDetailView, BooksRepository booksRepository) {
         mBookDetailView = bookDetailView;
+        mBooksRepository = booksRepository;
     }
 
     @Override
     public void addBook(Book book) {
         mBookDetailView.addBookSuccess(book);
+        mBooksRepository.saveBook(book);
     }
 }

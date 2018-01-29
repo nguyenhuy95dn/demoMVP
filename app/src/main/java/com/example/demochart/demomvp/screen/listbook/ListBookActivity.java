@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 import com.example.demochart.demomvp.R;
+import com.example.demochart.demomvp.data.FakeBooksServiceApiImpl;
+import com.example.demochart.demomvp.data.BookRepositories;
+import com.example.demochart.demomvp.data.BooksRepository;
 import com.example.demochart.demomvp.data.model.Book;
 import com.example.demochart.demomvp.screen.addbook.AddBookActivity;
 import com.example.demochart.demomvp.screen.detailbook.BookDetailActivity;
@@ -42,6 +44,11 @@ public class ListBookActivity extends AppCompatActivity
         recyclerView.setAdapter(mListAdapter);
         mListAdapter.setItemClickListener(this);
 
+        BooksRepository notesRepository =
+                BookRepositories.getInMemoryRepoInstance(new FakeBooksServiceApiImpl());
+        mPresenter = new ListBookPresenter(this, notesRepository);
+        setPresenter(mPresenter);
+
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_book);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,8 +60,19 @@ public class ListBookActivity extends AppCompatActivity
     }
 
     @Override
-    public void getListBook() {
+    public void setPresenter(ListBookContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.loadBooks();
+    }
+
+    @Override
+    public void showBooks(List<Book> books) {
+        mListAdapter.updateData(books);
     }
 
     @Override
@@ -74,11 +92,7 @@ public class ListBookActivity extends AppCompatActivity
             mListAdapter.updateData(books);
         }
         if (requestCode == 2 && data != null) {
-            Bundle bundle = data.getExtras();
-            Book book = (Book) bundle.getParcelable("ADD_BOOK");
-            book.setId(books.size());
-            books.add(book);
-            mListAdapter.updateData(books);
+            mPresenter.loadBooks();
         }
     }
 }
