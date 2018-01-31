@@ -27,14 +27,12 @@ public final class BooksServiceApiEndpoint {
 
     static {
         DATA = new ArrayMap(2);
-        addNote("Oh yes!", "I demand trial by Unit testing", null);
-        addNote("Espresso", "UI Testing for Android", null);
     }
 
     private final static ArrayMap<String, Book> DATA;
 
-    private static void addNote(String title, String description, String imageUrl) {
-        Book newNote = new Book(title, description, imageUrl);
+    private static void addBook(int id, String title, String description, String imageUrl) {
+        Book newNote = new Book(id, title, description, imageUrl);
         DATA.put(String.valueOf(newNote.getId()), newNote);
     }
 
