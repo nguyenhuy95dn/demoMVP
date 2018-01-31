@@ -67,12 +67,13 @@ public class ListBookActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.loadBooks();
     }
 
     @Override
     public void showBooks(List<Book> books) {
-        mListAdapter.updateData(books);
+        Book book = books.get(0);
+        this.books.add(book);
+        mListAdapter.updateData(this.books);
     }
 
     @Override

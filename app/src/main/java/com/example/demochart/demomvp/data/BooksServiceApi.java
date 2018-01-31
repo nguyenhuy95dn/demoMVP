@@ -34,5 +34,5 @@ public interface BooksServiceApi {
 
     void getBook(String noteId, NotesServiceCallback<Book> callback);
 
-    void saveNote(Book book);
+    void saveBook(Book book);
 }

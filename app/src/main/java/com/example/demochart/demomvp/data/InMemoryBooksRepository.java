@@ -63,7 +63,7 @@ public class InMemoryBooksRepository implements BooksRepository {
 
     @Override
     public void saveBook(@NonNull Book book) {
-        mNotesServiceApi.saveNote(book);
+        mNotesServiceApi.saveBook(book);
         refreshData();
     }
 

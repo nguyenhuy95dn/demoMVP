@@ -42,7 +42,7 @@ public class FakeBooksServiceApiImpl implements BooksServiceApi {
     }
 
     @Override
-    public void saveNote(Book book) {
+    public void saveBook(Book book) {
         NOTES_SERVICE_DATA.put(String.valueOf(book.getId()), book);
     }
 
